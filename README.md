@@ -1,6 +1,6 @@
 # Youtube scraper example:
 
-This is a simple scripting example that uses the audio scraper code (https://github.com/carlthome/audio-scraper), to scrape songs given in a csv file.
+This is a simple scripting example that uses the audio scraper code (https://github.com/carlthome/audio-scraper), to scrape songs given in the **songs.csv** file. This file contains a list of ~1000 popular songs of different genres.
 
 The script runs a query with the song name and the artist, plus some extra keywords we may want to add and downloads a certain number of songs, corresponding to the search query, from youtube, in **.webm** format. 
 
