@@ -22,7 +22,7 @@ def main():
 
     #This is sets the API KEY
     #The API key needs to be created in the google console website (https://console.developers.google.com)
-    YOUTUBE_API_KEY = "AIzaSyDc3qwXIs-vVo9LF3fsAmEcDw98Y-UU-X8"#"" 
+    YOUTUBE_API_KEY = ""#"" 
     pafy.set_api_key(YOUTUBE_API_KEY) 
     
     #Query all the musics in the csv 
