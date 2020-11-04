@@ -4,6 +4,7 @@ import os
 import re
 
 import pafy
+from time import sleep
 
 try:
     from urllib.parse import urlencode
@@ -11,8 +12,7 @@ try:
 except ImportError:
     from urllib import urlencode, urlopen
 
-
-def scrape(query, include, exclude, quiet, overwrite):
+def scrape(query, include, exclude, quiet, overwrite, max_songs_down = 6):
     """Search YouTube and download audio from discovered videos."""
 
     # Search YouTube for videos.
@@ -21,9 +21,13 @@ def scrape(query, include, exclude, quiet, overwrite):
     video_ids = re.findall(r'watch\?v=(.{11})', html)
 
     print("The number of found videos is: ", len(video_ids))
-    
+    n_songs_down = 0
     # Go through all found videos.
     for video_id in video_ids:
+
+        #Stop when number of songs is reached or when the number of the desired songs is in the folder
+        if(n_songs_down >= max_songs_down and len(os.listdir(os.getcwd() + "/")) >= max_songs_down):
+            break
 
         # Fetch metadata and available streams.
         # If id is not valid, don't download and move to the next one
@@ -31,6 +35,7 @@ def scrape(query, include, exclude, quiet, overwrite):
             video = pafy.new(video_id)
         except Exception as e: 
             print(str(e) + "\n")
+            print("File not downloaded")
             continue 
 
         # Collect video metadata.
@@ -53,9 +58,17 @@ def scrape(query, include, exclude, quiet, overwrite):
         audio = video.getbestaudio()
 
         # Skip existing files.
-        if os.path.isfile(audio.filename) and not overwrite:
-            continue
-        
-        # Download audio to working directory.
-        audio.download(quiet=quiet)
-        
+        try:
+            if os.path.isfile(audio.filename) and not overwrite:
+                n_songs_down += 1
+                continue
+            
+            sleep(1)
+            # Download audio to working directory.
+            audio.download(quiet=quiet)
+            #Increase when song is downloaded correctly
+            n_songs_down += 1
+
+        except Exception as e:
+            print(str(e) + "\n")
+            continue 

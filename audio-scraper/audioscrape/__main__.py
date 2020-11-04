@@ -6,9 +6,9 @@ import sys
 from . import  youtube
 
 
-def download(query, include=None, exclude=None, quiet=False, overwrite=False):
+def download(query, include=None, exclude=None, quiet=False, overwrite=False, max_songs_down = 6):
     """Scrape various websites for audio."""
-    youtube.scrape(query, include, exclude, quiet, overwrite)
+    youtube.scrape(query, include, exclude, quiet, overwrite, max_songs_down = max_songs_down)
 #    soundcloud.scrape(query, include, exclude, quiet, overwrite)
 
 
